@@ -1,0 +1,62 @@
+Need for a Database
+A database is needed to store, organize, and manage data efficiently. Without a database, data would be scattered across different locations and formats, making it hard to access, update, and maintain. Databases allow for easier storage, retrieval, and manipulation of large volumes of data. They also ensure data integrity, security, and scalability.
+
+a. Callable Statement
+
+CallableStatement cs = conn.prepareCall("{call GetEmployeeDetails(?, ?)}");
+cs.setInt(1, 101);
+cs.registerOutParameter(2, Types.VARCHAR);
+cs.execute();
+String employeeName = cs.getString(2);
+A callable statement is used to execute stored procedures.
+
+b. Prepared Statement
+
+PreparedStatement ps = conn.prepareStatement("SELECT * FROM Employees WHERE age > ?");
+ps.setInt(1, 30);
+ResultSet rs = ps.executeQuery();
+A prepared statement is used to execute SQL queries with parameters, improving security and performance.
+
+c. Stored Procedure
+
+CREATE PROCEDURE GetEmployeeDetails (IN emp_id INT)
+BEGIN
+    SELECT * FROM Employees WHERE id = emp_id;
+END;
+A stored procedure is a precompiled SQL statement stored in the database to execute repeatedly.
+
+
+Concept of Normalization
+Normalization is the process of organizing data in a database to minimize redundancy and dependency. The goal is to divide large tables into smaller ones and define relationships between them. The common normal forms are:
+
+1NF (First Normal Form): Eliminates duplicate columns and ensures each field contains only atomic values.
+2NF (Second Normal Form): Ensures that all non-key columns are fully dependent on the primary key.
+3NF (Third Normal Form): Removes transitive dependency between columns.
+Example:
+
+
+-- Before normalization (non-atomic data)
+CREATE TABLE Orders (
+    OrderID INT,
+    CustomerName VARCHAR(50),
+    ProductName VARCHAR(50)
+);
+
+-- After normalization (splitting into separate tables)
+CREATE TABLE Customers (
+    CustomerID INT PRIMARY KEY,
+    CustomerName VARCHAR(50)
+);
+
+CREATE TABLE Products (
+    ProductID INT PRIMARY KEY,
+    ProductName VARCHAR(50)
+);
+
+CREATE TABLE Orders (
+    OrderID INT PRIMARY KEY,
+    CustomerID INT,
+    ProductID INT,
+    FOREIGN KEY (CustomerID) REFERENCES Customers(CustomerID),
+    FOREIGN KEY (ProductID) REFERENCES Products(ProductID)
+);
