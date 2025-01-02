@@ -1,8 +1,35 @@
 package Java.src.collections;
 
 import java.util.*;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
+class Student {
+    private int id;
+    private String name;
+
+    public Student(int id, String name) {
+        this.id = id;
+        this.name = name;
+    }
+
+    public int getId() {
+        return id;
+    }
+
+    public String getName() {
+        return name;
+    }
+
+    @Override
+    public String toString() {
+        return "Student{" + "id=" + id + ", name='" + name + '\'' + '}';
+    }
+}
 
 public class CustomSort {
+    private static final Logger logger = LoggerFactory.getLogger(CustomSort.class);
+
     public static void main(String[] args) {
         List<Student> students = new ArrayList<>();
         students.add(new Student(3, "John"));
@@ -11,10 +38,10 @@ public class CustomSort {
 
         // Sort using Comparable
         students.sort(Comparator.comparingInt(Student::getId));
-        System.out.println("Sorted by ID: " + students);
+        logger.info("Sorted by ID: {}", students);
 
         // Sort using Comparator
         students.sort(Comparator.comparing(Student::getName));
-        System.out.println("Sorted by Name: " + students);
+        logger.info("Sorted by Name: {}", students);
     }
 }
