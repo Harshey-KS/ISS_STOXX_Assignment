@@ -1,20 +1,25 @@
 package Java.src.exceptions;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
 public class ExceptionHandling {
+    private static final Logger logger = LoggerFactory.getLogger(ExceptionHandling.class);
+
     public static void main(String[] args) {
         try {
             int result = 10 / 0; // Will throw ArithmeticException
         } catch (ArithmeticException e) {
-            System.out.println("Caught exception: " + e.getMessage());
+            logger.error("Caught exception: {}", e.getMessage(), e);
         } finally {
-            System.out.println("Finally block executed.");
+            logger.info("Finally block executed.");
         }
 
         // Demonstrating throw vs throws
         try {
             validateAge(17);
         } catch (Exception e) {
-            System.out.println(e.getMessage());
+            logger.error(e.getMessage(), e);
         }
     }
 
