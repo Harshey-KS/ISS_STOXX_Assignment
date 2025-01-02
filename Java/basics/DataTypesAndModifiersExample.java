@@ -1,6 +1,12 @@
 package Java.src.basics;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
 public class DataTypesAndModifiersExample {
+    // Logger instance
+    private static final Logger logger = LoggerFactory.getLogger(DataTypesAndModifiersExample.class);
+
     // Static variable (shared across instances)
     static int sharedCounter = 0;
 
@@ -10,15 +16,16 @@ public class DataTypesAndModifiersExample {
     // Constructor
     public DataTypesAndModifiersExample() {
         sharedCounter++;
+        logger.info("New instance created. Shared Counter incremented to {}", sharedCounter);
     }
 
     public static void main(String[] args) {
         int age = 25; // Primitive datatype
         String name = "John"; // Reference datatype
-        System.out.println("Age: " + age + ", Name: " + name);
+        logger.info("Age: {}, Name: {}", age, name);
 
         DataTypesAndModifiersExample obj1 = new DataTypesAndModifiersExample();
         DataTypesAndModifiersExample obj2 = new DataTypesAndModifiersExample();
-        System.out.println("Shared Counter: " + sharedCounter);
+        logger.info("Final Shared Counter: {}", sharedCounter);
     }
 }
